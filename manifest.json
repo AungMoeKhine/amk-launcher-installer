@@ -1,0 +1,16 @@
+{
+  "name": "AMK Multi-Boot App Launcher (Universal ESP32 CYD)",
+  "version": "1.0.0",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        {
+          "path": "AMK_Launcher_merged.bin",
+          "offset": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>AMK Multi-Boot App Launcher - Web Installer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%);
+      --card-bg: rgba(30, 41, 59, 0.75);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --accent-cyan: #00bcd4;
+      --accent-cyan-hover: #00acc1;
+      --accent-green: #10b981;
+      --accent-green-hover: #059669;
+      --accent-purple: #8b5cf6;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --warning-bg: rgba(245, 158, 11, 0.12);
+      --warning-border: rgba(245, 158, 11, 0.4);
+      --warning-text: #fde68a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 15px;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 40px 32px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+      text-align: center;
+    }
+
+    .logo-wrapper {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 18px;
+    }
+
+    .logo {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid var(--accent-cyan);
+      box-shadow: 0 0 25px rgba(0, 188, 212, 0.35);
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, #ffffff, #67e8f9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+    }
+
+    .developer-badge {
+      display: inline-block;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 4px 16px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .developer-badge strong {
+      color: var(--accent-cyan);
+    }
+
+    /* Universal Compatibility Banner */
+    .universal-banner {
+      background: rgba(0, 188, 212, 0.1);
+      border: 1px solid rgba(0, 188, 212, 0.3);
+      color: #e0f2fe;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: 500;
+      font-size: 0.92rem;
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .universal-banner strong {
+      color: var(--accent-cyan);
+    }
+
+    /* Feature Pills */
+    .features-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 26px;
+    }
+
+    .feature-pill {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: #cbd5e1;
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 6px 14px;
+      border-radius: 999px;
+    }
+
+    /* Step-by-Step Guide Cards */
+    .steps-container {
+      text-align: left;
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 26px;
+    }
+
+    .steps-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-cyan);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.92rem;
+      color: #cbd5e1;
+      margin-bottom: 12px;
+    }
+
+    .step-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .step-num {
+      background: var(--accent-cyan);
+      color: #0f172a;
+      font-weight: 700;
+      font-size: 0.75rem;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Action Section */
+    .action-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 24px 20px;
+      margin-bottom: 20px;
+    }
+
+    .action-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .note {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: inherit;
+      font-size: 1.05rem;
+      font-weight: 600;
+      padding: 14px 30px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      width: 100%;
+      max-width: 340px;
+    }
+
+    .btn-install {
+      background: linear-gradient(135deg, var(--accent-cyan), #0284c7);
+      color: #ffffff;
+      box-shadow: 0 10px 20px -5px rgba(0, 188, 212, 0.45);
+    }
+
+    .btn-install:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 26px -5px rgba(0, 188, 212, 0.6);
+    }
+
+    .btn-guide {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: #ffffff;
+      font-size: 0.95rem;
+      padding: 10px 20px;
+      max-width: 260px;
+    }
+
+    /* Code block for SD card layout (Matching Image 2) */
+    .code-card {
+      position: relative;
+      background: #090d16;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-top: 14px;
+      text-align: left;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .code-card-header {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .icon-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      padding: 5px 6px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      line-height: 1;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .icon-btn:hover {
+      color: #f8fafc;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .code-content {
+      margin: 0;
+      padding: 0;
+      font-family: 'Consolas', 'Cascadia Code', 'Fira Code', 'JetBrains Mono', monospace;
+      font-size: 0.92rem;
+      line-height: 1.65;
+      color: #f8fafc;
+      white-space: pre;
+      overflow-x: auto;
+    }
+
+    .code-content code {
+      font-family: inherit;
+      color: inherit;
+    }
+
+    .copied-tooltip {
+      display: none;
+      position: absolute;
+      top: -26px;
+      right: 0;
+      background: var(--accent-cyan);
+      color: #0f172a;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .copied-tooltip.show {
+      display: block;
+    }
+
+    .btn-download {
+      background: linear-gradient(135deg, var(--accent-green), #059669);
+      color: #ffffff;
+      box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.35);
+      margin-top: 16px;
+      display: inline-flex;
+      max-width: 360px;
+    }
+
+    .btn-download:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 24px -5px rgba(16, 185, 129, 0.5);
+    }
+
+    /* Crucial SD Card Asset Rule Box */
+    .asset-rule-box {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-top: 16px;
+      text-align: left;
+    }
+
+    .rule-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+      color: #a7f3d0;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .rule-list {
+      margin: 0;
+      padding-left: 20px;
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      line-height: 1.6;
+    }
+
+    .rule-list li {
+      margin-bottom: 6px;
+    }
+
+    .rule-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .rule-list strong {
+      color: #f8fafc;
+    }
+
+    /* Apps Showcase Styling */
+    .apps-showcase {
+      margin-top: 18px;
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: left;
+    }
+
+    .showcase-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      margin-bottom: 10px;
+    }
+
+    .apps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .app-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: #cbd5e1;
+    }
+
+    .app-item strong {
+      color: #ffffff;
+      font-family: 'Consolas', monospace;
+    }
+
+    .app-icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    /* Emergency Alert Notice */
+    .emergency-alert {
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      color: var(--warning-text);
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      margin-top: 15px;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer {
+      margin-top: 24px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 24px 16px;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+  <script type="module" src="https://unpkg.com/esp-web-tools@9/dist/web/install-button.js?module"></script>
+</head>
+<body>
+  <div class="container">
+    <!-- Developer Logo -->
+    <div class="logo-wrapper">
+      <img src="logo.png" alt="AMK Developer Logo" class="logo">
+    </div>
+
+    <h1>AMK Multi-Boot App Launcher</h1>
+    <div class="developer-badge">Developed by <strong>Aung Moe Khine</strong></div>
+
+    <!-- Universal Hardware Badge -->
+    <div class="universal-banner">
+      <span>🚀</span>
+      <div>
+        <strong>Universal Display Engine:</strong> Supports All ESP32 &amp; ESP32-S3 Smart Displays — 2.4", 2.8", 3.2", 3.5", 4.0", 4.3", 5.0", &amp; 7.0" (Resistive &amp; Capacitive Touch)!
+        <div style="font-size: 0.82rem; opacity: 0.9; margin-top: 4px; font-weight: normal; color: #cbd5e1;">
+          Auto-detects CYD (2432S028 / 3248S035), ESP32-32E (USB-C), Guition, Elecrow CrowPanel, Sunton, &amp; Waveshare with frozen hardware color standards.
+        </div>
+      </div>
+    </div>
+
+    <!-- Key Feature Pills -->
+    <div class="features-grid">
+      <span class="feature-pill">&#9889; Hardware Dual-Boot OTA Engine</span>
+      <span class="feature-pill">&#128241; Resistive &amp; Capacitive Touch</span>
+      <span class="feature-pill">&#128190; MicroSD App Carousel</span>
+      <span class="feature-pill">&#127774; LDR Auto-Dimming</span>
+      <span class="feature-pill">&#128268; USB-C &amp; Micro-USB Support</span>
+      <span class="feature-pill">&#128737;&#65039; BOOT Button Emergency Recovery</span>
+    </div>
+
+    <!-- Quick Setup Guide -->
+    <div class="steps-container">
+      <div class="steps-title">Quick Web Installation Guide</div>
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div>Connect your <strong>ESP32 CYD board</strong> to your computer via USB using <strong>Google Chrome</strong> or <strong>Microsoft Edge</strong>.</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div>Click <strong>Install AMK Launcher</strong> below and choose your board's serial port (e.g. COM4).</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div>Format MicroSD as <strong>FAT32</strong>. Put <code>.bin</code> files inside <strong><code>/apps/</code></strong>, and place supporting folders (like Weather Station <strong><code>icons/</code></strong> and <strong><code>flags/</code></strong>) directly in the <strong>root directory</strong>.</div>
+      </div>
+    </div>
+
+    <!-- Action Box 1: Web Install Button -->
+    <div class="action-box">
+      <div class="action-title">Step 1: Flash AMK Multi-Boot Launcher</div>
+      <p class="note">Flashes KeyBoot interceptor bootloader, 4MB custom partition table (1.34 MB SPIFFS + 1.92 MB App slot), and AMK Launcher UI.</p>
+      
+      <!-- ESP Web Install Button Element -->
+      <div id="install-button-wrapper">
+        <esp-web-install-button id="esp-installer" manifest="manifest.json">
+          <button slot="activate" class="btn btn-install">
+            &#9889; Install AMK Launcher
+          </button>
+        </esp-web-install-button>
+      </div>
+
+      <div class="emergency-alert">
+        <span>&#9888;&#65039;</span>
+        <div><strong>Emergency Return:</strong> If any loaded application freezes or you want to return to the launcher, simply hold down the <strong>BOOT button (GPIO 0)</strong> while powering on or resetting the device!</div>
+      </div>
+    </div>
+
+    <!-- Action Box 2: MicroSD Setup Details (Styled exactly like Image 2) -->
+    <div class="action-box">
+      <div class="action-title">Step 2: MicroSD Card App Setup Guide</div>
+      <p class="note">Drop any compiled ESP32 Arduino / ESP-IDF <code>.bin</code> into your MicroSD card. No code changes required!</p>
+      
+      <div class="code-card">
+        <div class="code-card-header">
+          <span class="icon-btn" title="Tree view">@</span>
+          <button class="icon-btn" onclick="copyTree()" title="Copy to clipboard">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span class="copied-tooltip">Copied!</span>
+          </button>
+        </div>
+        <pre class="code-content"><code id="tree-code">/ (MicroSD Card Root - FAT32)
+├── apps/
+│   ├── FlightRadar.bin        &lt;- Live Aircraft Radar Tracker
+│   ├── FlipClock.bin          &lt;- Retro Split-Flap Clock
+│   ├── TouchCalibration.bin   &lt;- Touch Calibration Utility
+│   ├── WeatherStation2.8.bin  &lt;- Weather Station (2.8" CYD)
+│   └── WeatherStation3.5.bin  &lt;- Weather Station (3.5" CYD)
+├── BMP32X32/                  &lt;- Compact Weather Icons (Root)
+├── BMP64x64/                  &lt;- High-Res Weather Icons (Root)
+├── flags/                     &lt;- Country Flags (Root)
+└── Logo/                      &lt;- AMK Logos &amp; Splash Assets (Root)</code></pre>
+      </div>
+
+      <!-- Crucial Asset Placement Callout -->
+      <div class="asset-rule-box">
+        <div class="rule-header">
+          <span>⚠️</span>
+          <strong>Important SD Card File Placement:</strong>
+        </div>
+        <ul class="rule-list">
+          <li><strong>Application Binaries:</strong> All application <code>.bin</code> files must be placed inside the <strong><code>/apps/</code></strong> folder (e.g. <code>/apps/FlightRadar.bin</code>, <code>/apps/WeatherStation2.8.bin</code>).</li>
+          <li><strong>Weather Station Supporting Assets:</strong> Folders like <strong><code>/BMP32X32/</code></strong>, <strong><code>/BMP64x64/</code></strong>, and <strong><code>/flags/</code></strong> <strong>MUST be placed directly in the ROOT of the SD card</strong>, NOT inside <code>/apps/</code>!</li>
+        </ul>
+      </div>
+
+      <!-- Included Apps Showcase -->
+      <div class="apps-showcase">
+        <div class="showcase-title">📦 Included Ready-to-Run Applications:</div>
+        <div class="apps-list">
+          <div class="app-item">
+            <span class="app-icon">✈️</span>
+            <div><strong>FlightRadar.bin</strong>: Live ADS-B aircraft radar tracking on OpenStreetMap</div>
+          </div>
+          <div class="app-item">
+            <span class="app-icon">🕰️</span>
+            <div><strong>FlipClock.bin</strong>: Retro split-flap clock with NTP synchronization &amp; timezones</div>
+          </div>
+          <div class="app-item">
+            <span class="app-icon">🎯</span>
+            <div><strong>TouchCalibration.bin</strong>: Precision touchscreen hardware calibration tool</div>
+          </div>
+          <div class="app-item">
+            <span class="app-icon">☀️</span>
+            <div><strong>WeatherStation2.8.bin</strong>: Complete weather monitor &amp; 7-day forecast for 2.8" displays</div>
+          </div>
+          <div class="app-item">
+            <span class="app-icon">🌤️</span>
+            <div><strong>WeatherStation3.5.bin</strong>: High-resolution weather station for 3.5" displays</div>
+          </div>
+        </div>
+      </div>
+
+      <a href="AMK_CYD_SD_Card_Files.zip" download class="btn btn-download">
+        📁 Download Apps &amp; Required Files (.zip)
+      </a>
+    </div>
+
+    <div class="footer">
+      Powered by ESP Web Tools &bull; Web Serial API &bull; AMK CYD Universal Ecosystem
+    </div>
+  </div> <!-- Closes .container card -->
+
+  <!-- Embedded Wide Horizontal Virtual Aquarium Section (Kept intact for Aung Moe Khine) -->
+  <div style="width: 100%; max-width: 900px; margin-top: 25px; background: rgba(30, 41, 59, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 15px 20px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);">
+    <div class="action-title" style="margin-bottom: 10px; color: #00bcd4; text-align: center; font-size: 1.15rem;">Interactive Virtual Aquarium</div>
+    <iframe src="fishtank.html" scrolling="no" style="width: 100%; height: 680px; border: none; border-radius: 12px; background: #06090e; display: block; overflow: hidden;"></iframe>
+  </div>
+  <script>
+    function copyTree() {
+      const code = document.getElementById('tree-code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        const tip = document.querySelector('.copied-tooltip');
+        if (tip) {
+          tip.classList.add('show');
+          setTimeout(() => tip.classList.remove('show'), 2000);
+        }
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+    }
+  </script>
+</body>
+</html>
