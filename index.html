@@ -100,22 +100,48 @@
 
     /* Universal Compatibility Banner */
     .universal-banner {
-      background: rgba(0, 188, 212, 0.1);
-      border: 1px solid rgba(0, 188, 212, 0.3);
+      background: rgba(0, 188, 212, 0.08);
+      border: 1px solid rgba(0, 188, 212, 0.25);
       color: #e0f2fe;
-      padding: 12px 18px;
-      border-radius: 12px;
-      font-weight: 500;
-      font-size: 0.92rem;
+      padding: 16px 20px;
+      border-radius: 14px;
       margin-bottom: 22px;
+      text-align: center;
+    }
+
+    .banner-title {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      margin-bottom: 6px;
     }
 
-    .universal-banner strong {
-      color: var(--accent-cyan);
+    .banner-subtitle {
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .banner-tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .banner-tag {
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid rgba(0, 188, 212, 0.25);
+      color: #e2e8f0;
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 5px 14px;
+      border-radius: 999px;
     }
 
     /* Feature Pills */
@@ -458,14 +484,19 @@
     <h1>AMK Multi-Boot App Launcher</h1>
     <div class="developer-badge">Developed by <strong>Aung Moe Khine</strong></div>
 
-    <!-- Universal Hardware Badge -->
+    <!-- Universal Hardware Banner -->
     <div class="universal-banner">
-      <span>🚀</span>
-      <div>
-        <strong>Universal Display Engine:</strong> Supports All ESP32 &amp; ESP32-S3 Smart Displays — 2.4", 2.8", 3.2", 3.5", 4.0", 4.3", 5.0", &amp; 7.0" (Resistive &amp; Capacitive Touch)!
-        <div style="font-size: 0.82rem; opacity: 0.9; margin-top: 4px; font-weight: normal; color: #cbd5e1;">
-          Auto-detects CYD (2432S028 / 3248S035), ESP32-32E (USB-C), Guition, Elecrow CrowPanel, Sunton, &amp; Waveshare with frozen hardware color standards.
-        </div>
+      <div class="banner-title">
+        <span>🚀</span>
+        <span>Universal Smart Display Engine</span>
+      </div>
+      <p class="banner-subtitle">
+        Automatically detects your board variant, screen driver, and touch controller at boot — zero manual configuration needed.
+      </p>
+      <div class="banner-tags">
+        <span class="banner-tag">📺 2.4" to 7.0" Screens</span>
+        <span class="banner-tag">👆 Resistive &amp; Capacitive Touch</span>
+        <span class="banner-tag">🔌 CYD &bull; USB-C &bull; Elecrow &bull; Waveshare</span>
       </div>
     </div>
 
