@@ -39,7 +39,7 @@ SD Card Root (FAT32)
 ### 📦 Included Applications:
 1. **✈️ FlightRadar.bin** — Real-time ADS-B aircraft flight tracking on OpenStreetMap with interactive pan & zoom.
 2. **🕰️ FlipClock.bin** — Retro split-flap clock with automatic WiFi NTP time synchronization and multi-city timezone support.
-3. **🎯 TouchCalibration.bin** — Interactive 5-point hardware touchscreen calibration utility for resistive displays.
+3. **🎯 TouchCalibration.bin** — Interactive touchscreen hardware calibration & test utility with jitter filter tuning, live drawing test, and permanent NVS flash storage.
 4. **☀️ WeatherStation2.8.bin** — Full-featured weather station with current conditions, 7-day forecast, hourly temperature graph, and astronomical sun/moon tracking (for 2.8" CYD).
 5. **🌤️ WeatherStation3.5.bin** — High-resolution weather station optimized for 3.5" (320x480) CYD displays.
 
