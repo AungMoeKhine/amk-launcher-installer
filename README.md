@@ -24,6 +24,7 @@ A powerful, hardware-level multi-boot application launcher for ESP32 Cheap Yello
 
 - 🚀 **1.21 MB Launcher Partition (`test` @ `0x010000`):** Expanded launcher flash partition to 1,216 KB, providing abundant space for high-fidelity graphics, Wi-Fi web stack, and audio engine without bootloader overflow.
 - 📡 **Built-in Wi-Fi Web Drop:** Wirelessly upload `.bin` firmware straight to your MicroSD card via softAP (`AMK-Launcher-WiFi` at `192.168.4.1`) from any smartphone or laptop with a dedicated `Finish & Return` button.
+- 🔘 **Interactive AP Mode Exit Touch Feedback:** Added real-time visual touch responses (active cyan highlight, glowing border, and dynamic "Stopping AP Mode..." status) and audible click feedback to the Wi-Fi AP dismissal button, matching all primary navigation controls.
 - ⏱️ **Auto-Rescan & Countdown Modal:** Automatic directory scanning immediately after Wi-Fi upload, featuring an animated 3-second countdown modal with tap-to-skip.
 - 🔊 **Integrated Audio DAC Feedback:** Natural audio responses via ESP32 DAC on GPIO 26 — boot chime, touch clicks, and success tones.
 - 🎨 **Seamless Borderless Boot Splash:** Refined boot screen geometry and background matching, eliminating square logo borders while maintaining 100% natural, crisp 16-bit RGB565 color reproduction.
